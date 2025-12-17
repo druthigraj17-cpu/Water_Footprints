@@ -16,14 +16,28 @@ Make the invisible water footprint of daily products visible to every Indian cit
 ### SDG Alignment
 SDG 3 (Good Health), SDG 6 (Clean Water & Sanitation), SDG 9 (Innovation), SDG 13 (Climate Action)
 
-### Features Implemented
-- Camera-based product scanning & water footprint display
-- Manual search with 1000+ daily Indian products
-- Multilingual support (English + Hindi + regional languages)
-- Beautiful visualizations & awareness tips
-- Offline-capable database
+## Features Implemented
+- Calculation of water footprint for **solid food items**
+- Calculation of water footprint for **liquid items**
+- Calculation of water footprint for **personal use activities**
+- Calculation of water footprint for **washing clothes**
+- Category-based selection for easy user input
+- Quantity-based input for accurate calculation
+- Instant water footprint calculation using JavaScript
+- Simple and user-friendly interface
+- Clear display of calculated results
 
-### Tech Stack
-Flutter • Firebase / Supabase • Google ML Kit • Open-source Water Footprint Dataset
 
-100% software solution | No hardware required | Built in <36 hours for SIH 2025
+## Future Enhancements
+- Add more items and categories for detailed analysis
+- Improve calculation accuracy using expanded datasets
+- Develop an advanced version using **Google Lens**
+- Enable users to **scan an item** and automatically display its water footprint
+- Enhance UI for better user experience
+
+---
+
+## Project Use Case
+- Academic mini project  
+- Environmental awareness  
+- Sustainability and water conservation studies
