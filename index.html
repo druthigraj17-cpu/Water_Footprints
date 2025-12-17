@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Water Footprint Awareness System</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<!-- Chart.js CDN -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<style>
+* {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: Arial, sans-serif;
+  background: #ffffff;
+  color: #000000;
+  margin: 0;
+  line-height: 1.6;
+}
+
+section {
+  max-width: 1000px;
+  margin: 40px auto;
+  padding: 25px;
+  border: 1.5px solid #000;
+  background: #fff;
+}
+
+h1, h2, h3 {
+  text-align: center;
+  margin-bottom: 15px;
+}
+
+label {
+  display: block;
+  margin-top: 12px;
+  font-weight: bold;
+}
+
+input, select {
+  width: 100%;
+  padding: 8px;
+  margin-top: 6px;
+  border: 1.5px solid #000;
+  background: #fff;
+  transition: all 0.2s ease;
+}
+
+input:focus, select:focus {
+  outline: none;
+  border-color: #000;
+  box-shadow: 0 0 4px #000;
+}
+
+button {
+  margin-top: 25px;
+  padding: 12px;
+  width: 100%;
+  background: #000;
+  color: #fff;
+  border: none;
+  font-size: 16px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+button:hover {
+  background: #333;
+}
+
+.row {
+  margin-top: 25px;
+  padding-top: 15px;
+  border-top: 1px dashed #000;
+}
+
+.box {
+  margin-top: 25px;
+  padding: 18px;
+  border: 1.5px solid #000;
+  background: #fafafa;
+  font-size: 15px;
+}
+
+.hidden {
+  display: none;
+}
+
+/* TABLE */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+
+th, td {
+  border: 1px solid #000;
+  padding: 10px;
+  text-align: center;
+}
+
+th {
+  background: #f2f2f2;
+}
+
+tr:hover {
+  background: #ededed;
+}
+
+/* GRAPH */
+canvas {
+  margin-top: 35px;
+}
+
+/* RESPONSIVE */
+@media (max-width: 768px) {
+  section {
+    margin: 20px;
+    padding: 18px;
+  }
+}
+</style>
+
+
+</head>
+<body>
+
+<!-- ENTRY PAGE -->
+<section id="entry">
+<h1>Water Footprint Calculator</h1>
+
+<label>Name</label>
+<input id="username">
+
+<label>Select Language</label>
+<select id="lang">
+  <option value="en">English</option>
+  <option value="hi">हिन्दी</option>
+</select>
+
+<label>
+<input type="checkbox" id="human"> I am not a robot
+</label>
+
+<button onclick="enterApp()">Enter</button>
+</section>
+
+<!-- MAIN APP -->
+<section id="app" class="hidden">
+
+<h2 id="welcome"></h2>
+
+<!-- REFERENCE TABLE -->
+<h3>Reference Table: Water Footprint per Item</h3>
+<table>
+<tr><th>Category</th><th>Item</th><th>Unit</th><th>Water Footprint (L/unit)</th></tr>
+<tr><td>Solid Food</td><td>Rice</td><td>kg</td><td>2500</td></tr>
+<tr><td>Solid Food</td><td>Wheat</td><td>kg</td><td>1300</td></tr>
+<tr><td>Solid Food</td><td>Vegetables</td><td>kg</td><td>300</td></tr>
+<tr><td>Liquid Food</td><td>Milk</td><td>L</td><td>1000</td></tr>
+<tr><td>Liquid Food</td><td>Juice</td><td>L</td><td>200</td></tr>
+<tr><td>Personal</td><td>Bathing</td><td>min</td><td>60</td></tr>
+<tr><td>Personal</td><td>Gardening</td><td>min</td><td>15</td></tr>
+<tr><td>Clothing</td><td>Cotton Clothes</td><td>item</td><td>2700</td></tr>
+<tr><td>Clothing</td><td>Jeans</td><td>item</td><td>7600</td></tr>
+<tr><td>Household</td><td>Dish Washing</td><td>min</td><td>15</td></tr>
+</table>
+
+<!-- SOLID FOOD -->
+<div class="row">
+<b>Solid Food</b>
+<select id="solidFood">
+  <option value="0">Select</option>
+  <option value="2500">Rice</option>
+  <option value="1300">Wheat</option>
+  <option value="300">Vegetables</option>
+  <option value="400">Pulses</option>
+</select>
+<input id="solidQty" type="number" placeholder="Quantity (kg)">
+</div>
+
+<!-- LIQUID FOOD -->
+<div class="row">
+<b>Liquid Food</b>
+<select id="liquidFood">
+  <option value="0">Select</option>
+  <option value="1000">Milk</option>
+  <option value="200">Juice</option>
+</select>
+<input id="liquidQty" type="number" placeholder="Quantity">
+<select id="liquidUnit">
+  <option value="L">Litres</option>
+  <option value="mL">Millilitres</option>
+</select>
+</div>
+
+<!-- PERSONAL -->
+<div class="row">
+<b>Personal Use</b>
+<select id="personal">
+  <option value="0">Select</option>
+  <option value="60">Bathing</option>
+  <option value="15">Gardening</option>
+  <option value="200">Car Washing</option>
+  <option value="15">Dish Washing</option>
+  <option value="1">Drinking Water</option>
+</select>
+<input id="personalQty" type="number" placeholder="Minutes / Litres">
+</div>
+
+<!-- CLOTHING -->
+<div class="row">
+<b>Clothing</b>
+<select id="clothes">
+  <option value="0">Select</option>
+  <option value="2700">Cotton Clothes</option>
+  <option value="1800">Normal Clothes</option>
+  <option value="7600">Jeans</option>
+</select>
+<input id="clothesQty" type="number" placeholder="Number of items">
+</div>
+
+<button onclick="calculate()">Calculate</button>
+<label>Display Result In:</label>
+<select id="resultUnit">
+  <option value="L">Litres (L)</option>
+  <option value="mL">Millilitres (mL)</option>
+</select>
+
+
+<div id="result" class="box hidden"></div>
+
+<canvas id="chart"></canvas>
+
+</section>
+
+<script src="script.js"></script>
+
+</body>
+</html>
